@@ -1,40 +1,71 @@
-import React, { useState } from 'react';
-import { Star } from 'lucide-react';
-import { Sound } from '../types';
-import { SoundStar } from './SoundStar';
-import { useAudioPlayer } from '../hooks/useAudioPlayer';
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import type { Sound } from "../types";
+import { Star } from "./Star";
+import { Stars } from "@react-three/drei";
 
 interface PlayPageProps {
   sounds: Sound[];
+  playingStates: Record<string, boolean>;
+  playSound: (id: string) => void;
+  stopSound: (id: string) => void;
+  isLoading: (id: string) => boolean;
 }
 
-export function PlayPage({ sounds }: PlayPageProps) {
-  const [playingStates, setPlayingStates] = useState<Record<string, boolean>>({});
-  const { toggleSound, isLoading } = useAudioPlayer(sounds);
+export function PlayPage({
+  sounds,
+  playingStates,
+  playSound,
+  stopSound,
+  isLoading,
+}: PlayPageProps) {
+  const toggleSound = (id: string) => {
+    const sound = sounds.find((sound) => sound.id === id);
+    if (!sound) {
+      return;
+    }
 
-  const handleStarClick = (id: string) => {
-    const isNowPlaying = toggleSound(id);
-    if (isNowPlaying !== undefined) {
-      setPlayingStates(prev => ({
-        ...prev,
-        [id]: isNowPlaying
-      }));
+    if (playingStates[id]) {
+      stopSound(id);
+    } else {
+      playSound(id);
     }
   };
 
   return (
-    <div className="min-h-screen p-8">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+    <div className="w-full h-screen">
+      <Canvas camera={{ position: [20, 20, 20], fov: 75 }}>
+        <Stars
+          radius={100}
+          depth={50}
+          count={5000}
+          factor={4}
+          saturation={0}
+          fade
+          speed={1}
+        />
+        <OrbitControls enablePan={false} />
+        <ambientLight intensity={0.2} />
+
+        <mesh position={[0, 0, 0]} scale={1}>
+          <sphereGeometry args={[0.1, 32, 32]} />
+          <meshStandardMaterial
+            color={"#ffffff"}
+            emissive={"#ffffff"}
+            emissiveIntensity={1}
+          />
+        </mesh>
         {sounds.map((sound) => (
-          <SoundStar
+          <Star
             key={sound.id}
             sound={sound}
+            position={sound.position}
             isPlaying={playingStates[sound.id]}
             isLoading={isLoading(sound.id)}
-            onClick={() => handleStarClick(sound.id)}
+            onToggle={() => toggleSound(sound.id)}
           />
         ))}
-      </div>
+      </Canvas>
     </div>
   );
 }

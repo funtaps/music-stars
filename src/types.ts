@@ -1,13 +1,11 @@
-export interface Position {
-  x: number;
-  y: number;
-}
+import { Vector3 } from "three";
 
 export interface Sound {
   id: string;
   name: string;
   url: string;
-  isPlaying: boolean;
+  // isPlaying: boolean;
+  position: Vector3;
 }
 
 export interface SoundData {

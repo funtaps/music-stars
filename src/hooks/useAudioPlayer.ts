@@ -60,28 +60,31 @@ export function useAudioPlayer(sounds: Sound[]) {
     };
   }, [sounds, preloadAudio]);
 
+  const pauseSound = useCallback((id: string): boolean | undefined => {
+    const audio = audioRefs.current.get(id);
+    if (!audio) return;
+    audio.pause();
+    audio.currentTime = 0;
+    return true;
+  }, []);
+
+  const playSound = useCallback((id: string): boolean | undefined => {
+    const audio = audioRefs.current.get(id);
+    if (!audio) return;
+    audio.play();
+    return true;
+  }, []);
+
   const toggleSound = useCallback((id: string): boolean | undefined => {
     const audio = audioRefs.current.get(id);
     if (!audio) return;
 
     if (!audio.paused) {
-      audio.pause();
-      audio.currentTime = 0;
+      pauseSound(id);
       return false;
     } else {
-      try {
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-          playPromise.catch((error) => {
-            console.error('Playback failed:', error);
-            return false;
-          });
-        }
-        return true;
-      } catch (error) {
-        console.error('Playback failed:', error);
-        return false;
-      }
+      playSound(id);
+      return true;
     }
   }, []);
 
@@ -89,5 +92,5 @@ export function useAudioPlayer(sounds: Sound[]) {
     return loadingStates.current.get(id) || false;
   }, []);
 
-  return { toggleSound, isLoading };
+  return { toggleSound, pauseSound, playSound, isLoading };
 }
