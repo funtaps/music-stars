@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { Vector3 } from "three";
 
-import { Center, Text3D } from "@react-three/drei";
-// import { Text } from "@react-three/drei";
+import { Center, Text } from "@react-three/drei";
 
 import { BaseStar } from "./BaseStar";
 import { TextStarConfig } from "../types";
-
-// import NotoEmojiRegular from "../../NotoColorEmoji.ttf";
 
 interface TextStarProps {
   position: Vector3;
@@ -51,11 +48,8 @@ export const TextStar = ({ position, config: { text } }: TextStarProps) => {
       showChildOnOn={true}
     >
       <Center position={[0, lineCount * 1 + 1.5, 0]}>
-        <Text3D font={"/Droid.json"}>{finalText}</Text3D>
+        <Text font={"/DroidSans.ttf"}>{finalText}</Text>
       </Center>
-      {/* <Text font={"/DroidSans.ttf"} ref={textRef}>
-        {finalText} ({id})
-      </Text> */}
     </BaseStar>
   );
 };

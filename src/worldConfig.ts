@@ -83,8 +83,4 @@ export const getWorldConfig = (): StarConfig[] => {
       };
     })
     .filter((config): config is StarConfig => config !== null);
-  // .filter((config) => config.type === "audio");
-  // .filter(
-  //   (config) => !config.text.match(/[^a-zA-Z0-9А-Яа-яёЁ ,.()«»"!?:/\n—-]/g)
-  // );
 };
