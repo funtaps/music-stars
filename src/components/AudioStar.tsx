@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Vector3, AudioListener, Audio, AudioLoader } from "three";
 
 import { BaseStar } from "./BaseStar";
@@ -37,18 +37,13 @@ const GlobalAudio: React.FC<{ url: string }> = ({ url }) => {
   return null;
 };
 
-export const AudioStar = ({ position, config: { url } }: AudioStarProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+export const AudioStar = ({
+  position,
+  config: { url, id },
+}: AudioStarProps) => {
   const finalUrl = `static-files/${url}`;
   return (
-    <BaseStar
-      position={position}
-      onToggle={() => setIsPlaying((state) => !state)}
-      isOn={isPlaying}
-      showChildOnHover={false}
-      showChildOnOn={true}
-      accent={"#0000ff"}
-    >
+    <BaseStar id={id} position={position} accent={"#0000ff"}>
       <GlobalAudio url={finalUrl} />
     </BaseStar>
   );

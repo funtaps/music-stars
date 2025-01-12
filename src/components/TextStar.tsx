@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Vector3 } from "three";
 
 import DroidSans from "../../DroidSans.ttf";
@@ -37,18 +36,11 @@ const addNewLinesToLongText = (text: string) => {
   return lines.join("\n");
 };
 
-export const TextStar = ({ position, config: { text } }: TextStarProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+export const TextStar = ({ position, config: { text, id } }: TextStarProps) => {
   const finalText = addNewLinesToLongText(text);
   const lineCount = text.split("\n").length;
   return (
-    <BaseStar
-      position={position}
-      onToggle={() => setIsPlaying((state) => !state)}
-      isOn={isPlaying}
-      showChildOnHover={false}
-      showChildOnOn={true}
-    >
+    <BaseStar id={id} position={position}>
       <Center position={[0, lineCount * 1 + 1.5, 0]}>
         <Text font={DroidSans}>{finalText}</Text>
       </Center>

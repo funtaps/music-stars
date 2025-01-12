@@ -17,6 +17,9 @@ importers:
       '@react-three/fiber':
         specifier: ^8.17.12
         version: 8.17.12(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.170.0)
+      '@xstate/store':
+        specifier: ^2.6.2
+        version: 2.6.2(react@18.3.1)
       lucide-react:
         specifier: ^0.344.0
         version: 0.344.0(react@18.3.1)
@@ -690,6 +693,17 @@ packages:
 
   '@webgpu/types@0.1.52':
     resolution: {integrity: sha512-eI883Nlag2hGIkhXxAnq8s4APpqXWuPL3Gbn2ghiU12UjLvfCbVqHK4XfXl3eLRTatqcMmeK7jws7IwWsGfbzw==}
+
+  '@xstate/store@2.6.2':
+    resolution: {integrity: sha512-zznGTWU+tmhbD0UUxPLy5FmxvceBNyMsN1Tuy7UMJAH9NuaQWj4/B2L+EcO6FxI2b2CNyzk1PL5mZ8cDpBFpMw==}
+    peerDependencies:
+      react: ^18.2.0 || ^19.0.0-0
+      solid-js: ^1.7.6
+    peerDependenciesMeta:
+      react:
+        optional: true
+      solid-js:
+        optional: true
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -2390,6 +2404,10 @@ snapshots:
       - supports-color
 
   '@webgpu/types@0.1.52': {}
+
+  '@xstate/store@2.6.2(react@18.3.1)':
+    optionalDependencies:
+      react: 18.3.1
 
   acorn-jsx@5.3.2(acorn@8.14.0):
     dependencies:

@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { Vector3 } from "three";
 
 import { Center, Image } from "@react-three/drei";
@@ -13,21 +13,13 @@ interface ImageStarProps {
 
 export const ImageStar = ({
   position,
-  config: { url, width, height },
+  config: { url, width, height, id },
 }: ImageStarProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
   const finalUrl = `static-files/${url}`;
   const divider = (width > height ? width : height) / 10;
   return (
     <>
-      <BaseStar
-        position={position}
-        onToggle={() => setIsPlaying((state) => !state)}
-        isOn={isPlaying}
-        showChildOnHover={false}
-        showChildOnOn={true}
-        accent={"#ff0000"}
-      >
+      <BaseStar id={id} position={position} accent={"#ff0000"}>
         <Center position={[0, height / divider / 2 + 1.5, 0]}>
           <Suspense fallback={null}>
             <Image url={finalUrl} scale={[width / divider, height / divider]} />

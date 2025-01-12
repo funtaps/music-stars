@@ -1,6 +1,7 @@
 import { Vector3 } from "three";
 import { chatHistory } from "./chatHistory";
 import { StarConfig } from "./types";
+import { createStore } from "@xstate/store";
 
 const WORLD_RADIUS = 40;
 
@@ -84,3 +85,30 @@ export const getWorldConfig = (): StarConfig[] => {
     })
     .filter((config): config is StarConfig => config !== null);
 };
+
+const stars = getWorldConfig();
+
+export const worldStore = createStore({
+  context: {
+    stars,
+    starStates: Object.fromEntries(stars.map((star) => [star.id, false])),
+  },
+  on: {
+    toggleStar: {
+      starStates: (context, event: { id: number }) => {
+        const { id } = event;
+        return {
+          ...context.starStates,
+          [id]: !context.starStates[id],
+        };
+      },
+    },
+    turnAllOff: {
+      starStates: (context) => {
+        return Object.fromEntries(
+          Object.keys(context.starStates).map((id) => [id, false])
+        );
+      },
+    },
+  },
+});

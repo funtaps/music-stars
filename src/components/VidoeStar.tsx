@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Vector3 } from "three";
 
 import { Center, useVideoTexture } from "@react-three/drei";
@@ -13,28 +12,27 @@ interface ImageStarProps {
 
 export const VideoStar = ({
   position,
-  config: { url, height, width },
+  config: { url, height, width, id },
 }: ImageStarProps) => {
   const finalUrl = `static-files/${url}`;
-  const texture = useVideoTexture(finalUrl, { muted: false, loop: true });
-  const [isPlaying, setIsPlaying] = useState(false);
-  useEffect(() => {
-    if (isPlaying) {
-      texture.image.play();
-    } else {
-      texture.image.pause();
-    }
-  }, [isPlaying, texture]);
+  const texture = useVideoTexture(finalUrl, {
+    muted: false,
+    loop: true,
+    start: false,
+  });
   const divider = (width > height ? width : height) / 10;
   return (
     <BaseStar
+      id={id}
       position={position}
-      onToggle={() => setIsPlaying((state) => !state)}
-      isOn={isPlaying}
-      showChildOnHover={false}
-      showChildOnOn={true}
-      // childMargin={5}
       accent="#00ff00"
+      onToggle={(wasOn) => {
+        if (wasOn) {
+          texture.image.pause();
+        } else {
+          texture.image.play();
+        }
+      }}
     >
       <Center position={[0, height / divider / 2 + 1.5, 0]}>
         <mesh>

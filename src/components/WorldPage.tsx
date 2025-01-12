@@ -1,15 +1,11 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import type { StarConfig } from "../types";
 import { Stars } from "@react-three/drei";
-import { Text } from "@react-three/drei";
 import { AnyStar } from "./AnyStar";
 import { Suspense } from "react";
-import DroidSans from "../../DroidSans.ttf";
-
-interface WorldPageProps {
-  config: StarConfig[];
-}
+import { useSelector } from "@xstate/store/react";
+import { worldStore } from "../worldConfig";
+import { Hud } from "./Hud";
 
 const Spinner = () => (
   <div className="flex items-center justify-center w-full h-screen">
@@ -17,7 +13,8 @@ const Spinner = () => (
   </div>
 );
 
-export function WorldPage({ config }: WorldPageProps) {
+export function WorldPage() {
+  const stars = useSelector(worldStore, (state) => state.context.stars);
   return (
     <div className="w-full h-screen">
       <Suspense fallback={<Spinner />}>
@@ -42,10 +39,10 @@ export function WorldPage({ config }: WorldPageProps) {
               emissiveIntensity={1}
             />
           </mesh> */}
-          {config.map((star) => (
+          {stars.map((star) => (
             <AnyStar key={star.id} config={star} position={star.position} />
           ))}
-          <Text font={DroidSans}> </Text>
+          <Hud />
         </Canvas>
       </Suspense>
     </div>

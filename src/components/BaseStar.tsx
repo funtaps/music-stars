@@ -6,16 +6,17 @@ import { BufferGeometry, Float32BufferAttribute } from "three";
 import { useFrame } from "@react-three/fiber";
 import { Billboard } from "@react-three/drei";
 
+import { useSelector } from "@xstate/store/react";
+import { worldStore } from "../worldConfig";
+
 const AnimatedMaterial = animated("meshStandardMaterial");
 
 interface StarProps {
+  id: number;
   position: Vector3;
-  onToggle: () => void;
-  isOn: boolean;
-  showChildOnHover: boolean;
-  showChildOnOn: boolean;
   children: React.ReactNode;
   accent?: string;
+  onToggle?: (wasOn: boolean) => void;
 }
 
 const create3DStarShape = (radius = 0.5, pyramidHeight = 0.5) => {
@@ -69,14 +70,13 @@ const create3DStarShape = (radius = 0.5, pyramidHeight = 0.5) => {
 // react props with children
 export const BaseStar: React.FC<StarProps> = ({
   position,
-  onToggle,
-  isOn,
   children,
-  showChildOnHover,
-  showChildOnOn,
   accent,
+  id,
+  onToggle,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const isOn = useSelector(worldStore, (state) => state.context.starStates[id]);
 
   const ref = useRef<Mesh | null>(null);
   // const textRef = useRef<Mesh>(null);
@@ -104,7 +104,10 @@ export const BaseStar: React.FC<StarProps> = ({
       position={position}
       onClick={(e) => {
         e.stopPropagation();
-        onToggle();
+        if (onToggle) {
+          onToggle(isOn);
+        }
+        worldStore.send({ type: "toggleStar", id });
       }}
       onPointerOver={() => setIsHovered(true)}
       onPointerOut={() => setIsHovered(false)}
@@ -118,10 +121,7 @@ export const BaseStar: React.FC<StarProps> = ({
           transparent
         />
       </mesh>
-      <Billboard>
-        {((isHovered && showChildOnHover) || (isOn && showChildOnOn)) &&
-          children}
-      </Billboard>
+      <Billboard>{isOn && children}</Billboard>
       {isOn && <pointLight color="#fde047" intensity={2} distance={5} />}
     </group>
   );
