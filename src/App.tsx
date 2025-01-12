@@ -2,7 +2,6 @@ import { WorldPage } from "./components/WorldPage";
 import { getWorldConfig } from "./worldConfig";
 
 const worldCongig = getWorldConfig();
-console.log(worldCongig);
 
 function App() {
   return (

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Vector3 } from "three";
 
+import DroidSans from "../../DroidSans.ttf";
+
 import { Center, Text } from "@react-three/drei";
 
 import { BaseStar } from "./BaseStar";
@@ -48,7 +50,7 @@ export const TextStar = ({ position, config: { text } }: TextStarProps) => {
       showChildOnOn={true}
     >
       <Center position={[0, lineCount * 1 + 1.5, 0]}>
-        <Text font="/fonts/DroidSans.ttf">{finalText}</Text>
+        <Text font={DroidSans}>{finalText}</Text>
       </Center>
     </BaseStar>
   );

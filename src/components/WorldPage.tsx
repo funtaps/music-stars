@@ -5,6 +5,7 @@ import { Stars } from "@react-three/drei";
 import { Text } from "@react-three/drei";
 import { AnyStar } from "./AnyStar";
 import { Suspense } from "react";
+import DroidSans from "../../DroidSans.ttf";
 
 interface WorldPageProps {
   config: StarConfig[];
@@ -44,7 +45,7 @@ export function WorldPage({ config }: WorldPageProps) {
           {config.map((star) => (
             <AnyStar key={star.id} config={star} position={star.position} />
           ))}
-          <Text font={"/DroidSans.ttf"}> </Text>
+          <Text font={DroidSans}> </Text>
         </Canvas>
       </Suspense>
     </div>
