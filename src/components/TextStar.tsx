@@ -14,7 +14,7 @@ interface TextStarProps {
 }
 
 const addNewLinesToLongText = (text: string) => {
-  const maxLineLength = 80;
+  const maxLineLength = 40;
   const oldLines = text.split("\n");
   const lines = [];
   for (const line of oldLines) {
@@ -29,7 +29,7 @@ const addNewLinesToLongText = (text: string) => {
         lines.push(currentLine);
         currentLine = word;
       } else {
-        currentLine += ` ${word}`;
+        currentLine += (currentLine ? " " : "") + word;
       }
     }
     lines.push(currentLine);
