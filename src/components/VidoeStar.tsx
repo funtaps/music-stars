@@ -15,7 +15,7 @@ export const VideoStar = ({
   position,
   config: { url, height, width },
 }: ImageStarProps) => {
-  const finalUrl = `/assets/${url}`;
+  const finalUrl = `static-files/${url}`;
   const texture = useVideoTexture(finalUrl, { muted: false, loop: true });
   const [isPlaying, setIsPlaying] = useState(false);
   useEffect(() => {

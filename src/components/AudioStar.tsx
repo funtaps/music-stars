@@ -39,7 +39,7 @@ const GlobalAudio: React.FC<{ url: string }> = ({ url }) => {
 
 export const AudioStar = ({ position, config: { url } }: AudioStarProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const finalUrl = `/assets/${url}`;
+  const finalUrl = `static-files/${url}`;
   return (
     <BaseStar
       position={position}

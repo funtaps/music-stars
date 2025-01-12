@@ -48,7 +48,7 @@ export const TextStar = ({ position, config: { text } }: TextStarProps) => {
       showChildOnOn={true}
     >
       <Center position={[0, lineCount * 1 + 1.5, 0]}>
-        <Text font={"/DroidSans.ttf"}>{finalText}</Text>
+        <Text font="/fonts/DroidSans.ttf">{finalText}</Text>
       </Center>
     </BaseStar>
   );

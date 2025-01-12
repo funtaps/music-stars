@@ -16,7 +16,7 @@ export const ImageStar = ({
   config: { url, width, height },
 }: ImageStarProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const finalUrl = `/assets/${url}`;
+  const finalUrl = `static-files/${url}`;
   const divider = (width > height ? width : height) / 10;
   return (
     <>
