@@ -3,7 +3,7 @@ import { IcosahedronGeometry, Vector3, Mesh } from "three";
 import { useSpring, animated } from "@react-spring/three";
 
 import { BufferGeometry, Float32BufferAttribute } from "three";
-// import { useFrame } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { Billboard } from "@react-three/drei";
 
 const AnimatedMaterial = animated("meshStandardMaterial");
@@ -84,7 +84,7 @@ export const BaseStar: React.FC<StarProps> = ({
 
   const star3dShape = create3DStarShape();
 
-  /*useFrame(() => {
+  useFrame(() => {
     if (!ref.current) {
       return;
     }
@@ -93,23 +93,7 @@ export const BaseStar: React.FC<StarProps> = ({
       ref.current.rotation.y += 0.01;
       ref.current.rotation.z += 0.01;
     }
-    if (!childRef.current) {
-      return;
-    }
-    childRef.current.lookAt(camera.position);
-    // Adjust the text position to always be above the star from the camera's perspective
-    const starPosition = ref.current.position;
-    const direction = new Vector3();
-    direction.subVectors(camera.position, starPosition).normalize();
-    childRef.current.position.set(
-      starPosition.x - direction.x * 1.5,
-      starPosition.y - direction.y * 1.5 + childMargin,
-      starPosition.z - direction.z * 1.5
-    );
-
-    childRef.current.geometry.center();
   });
-  */
 
   const springs = useSpring({
     color: isHovered ? "#ffffff" : isOn ? "#fde047" : "#4232fd",
